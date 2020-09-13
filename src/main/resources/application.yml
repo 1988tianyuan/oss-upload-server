@@ -1,0 +1,21 @@
+# web
+server:
+  port: 8088
+
+# freemarker
+spring:
+  freemarker:
+    cache: true
+    charset: UTF-8
+    content-type: text/html
+    template-loader-path: classpath:/templates/
+    settings:
+      number_format: 0.##
+  resources:
+    static-locations: classpath:/static/
+
+# qiniu
+qiniu:
+  bucket-name: blog-graph
+  access-key: ds_PsdR6dSSrBKQEZtBEWK2th0b55IfSFOfqTvTv
+  secret-key: 8m1dQ15uqOlxegPVPrXx9dLsSM2tU4PippO52hnt
