@@ -16,15 +16,15 @@ public class OSSUploaderHolder implements InitializingBean {
     @Autowired
     private QiniuUploader qiniuUploader;
 
-    private Map<String, OSSUploader> uploaderMap = new HashMap<>();
+    private Map<String, OSSUploader<?>> uploaderMap = new HashMap<>();
 
     @Override
     public void afterPropertiesSet() throws Exception {
         uploaderMap.put("qiniu", qiniuUploader);
     }
 
-    public OSSUploader getUploader(@NonNull String ossName) {
-        OSSUploader uploader = uploaderMap.get(ossName);
+    public OSSUploader<?> getUploader(@NonNull String ossName) {
+        OSSUploader<?> uploader = uploaderMap.get(ossName);
         if (uploader == null) {
             log.warn("oss服务:{} 尚未配置，请检查参数", ossName);
         }

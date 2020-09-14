@@ -9,6 +9,7 @@ import com.tianyuan.objectstorageuploadserver.config.QiniuConfig;
 import com.tianyuan.objectstorageuploadserver.error.OSSUploadException;
 import com.tianyuan.objectstorageuploadserver.upload.OSSUploader;
 import com.tianyuan.objectstorageuploadserver.utils.JsonUtil;
+import com.tianyuan.objectstorageuploadserver.vo.QiniuUploadResVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -19,18 +20,18 @@ import java.text.MessageFormat;
 
 @Component
 @Slf4j
-public class QiniuUploader implements OSSUploader {
+public class QiniuUploader implements OSSUploader<QiniuUploadResVo> {
     @Autowired
     private QiniuConfig config;
 
     @Override
-    public String upload(String bucketName, Resource resource, String fileKey) {
+    public QiniuUploadResVo upload(String bucketName, Resource resource, String fileKey) {
         String uploadToken = config.getAuth().uploadToken(bucketName);
         try(InputStream inputStream = resource.getInputStream()) {
             Response response = config.getUploadManager().put(inputStream, fileKey,
                     uploadToken, null, null);
             log.info("success to upload file:{} to bucket:{}, result is:{}", fileKey, bucketName, response);
-            return JsonUtil.toJson(response);
+            return genResponse(fileKey, response);
         } catch (Exception e) {
             throw new OSSUploadException(MessageFormat.format("failed to upload file:{0} to bucket:{1}",
                     fileKey, bucketName), e);
@@ -38,7 +39,15 @@ public class QiniuUploader implements OSSUploader {
     }
 
     @Override
-    public String upload(Resource resource, String fileKey) {
+    public QiniuUploadResVo upload(Resource resource, String fileKey) {
         return upload(config.getBucketName(), resource, fileKey);
+    }
+
+    private QiniuUploadResVo genResponse(String fileKey, Response response) {
+        QiniuUploadResVo resVo = new QiniuUploadResVo();
+        resVo.setFileKey(fileKey);
+        resVo.setSuccess(true);
+        resVo.setOutLink(config.getOutLinkDomain() + fileKey);
+        return resVo;
     }
 }

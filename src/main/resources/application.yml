@@ -20,3 +20,4 @@ qiniu:
   bucket-name: blog-graph
   access-key: ds_PsdR6dSSrBKQEZtBEWK2th0b55IfSFOfqTvTv
   secret-key: 8m1dQ15uqOlxegPVPrXx9dLsSM2tU4PippO52hnt
+  outlink-domain: http://img.mantian.site/

@@ -22,6 +22,8 @@ public class QiniuConfig implements InitializingBean {
 
     private String bucketName;
 
+    private String outLinkDomain;
+
     private Auth auth;
 
     private UploadManager uploadManager;

@@ -2,9 +2,9 @@ package com.tianyuan.objectstorageuploadserver.upload;
 
 import org.springframework.core.io.Resource;
 
-public interface OSSUploader {
+public interface OSSUploader<T> {
 
-    String upload(String bucketName, Resource resource, String fileKey);
+    T upload(String bucketName, Resource resource, String fileKey);
 
-    String upload(Resource resource, String fileKey);
+    T upload(Resource resource, String fileKey);
 }
