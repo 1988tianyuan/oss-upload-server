@@ -4,28 +4,32 @@ import com.tianyuan.objectstorageuploadserver.upload.OSSUploader;
 import com.tianyuan.objectstorageuploadserver.upload.OSSUploaderHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
+
+import java.nio.channels.AsynchronousFileChannel;
+
+import static com.tianyuan.objectstorageuploadserver.config.Constants.API_PREFIX;
 
 @RestController
+@RequestMapping(API_PREFIX)
 public class UploadController {
     @Autowired
     private OSSUploaderHolder uploaderHolder;
 
     @PostMapping("/upload/{oss-name}")
-    public Mono<String> upload(@PathVariable("oss-name") String ossName,
+    public String upload(@PathVariable("oss-name") String ossName,
                                @RequestParam(required = false) String bucketName,
                                @RequestParam(required = false) String fileKey,
-                               MultipartFile file) {
-        fileKey = StringUtils.isEmpty(fileKey) ? file.getName() : fileKey;
+                               @RequestParam("upload-file") MultipartFile file) {
+        fileKey = StringUtils.isEmpty(fileKey) ? file.getOriginalFilename() : fileKey;
         OSSUploader ossUploader = uploaderHolder.getUploader(ossName);
         if (StringUtils.isEmpty(bucketName)) {
-            ossUploader.upload();
+            return ossUploader.upload(file.getResource(), fileKey);
         } else {
-            ossUploader.upload(bucketName, );
+            return ossUploader.upload(bucketName, file.getResource(), fileKey);
         }
-
-        return Mono.just("success");
     }
 }

@@ -29,6 +29,7 @@ public class QiniuConfig implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         com.qiniu.storage.Configuration conf = new com.qiniu.storage.Configuration(Region.autoRegion());
+        conf.useHttpsDomains = false;
         uploadManager = new UploadManager(conf);
         auth = Auth.create(accessKey, secretKey);
     }
