@@ -22,9 +22,9 @@ public class UploadController {
 
     @PostMapping("/upload/{oss-name}")
     public Object upload(@PathVariable("oss-name") String ossName,
-                               @RequestParam(required = false) String bucketName,
-                               @RequestParam(required = false) String fileKey,
-                               @RequestParam("upload-file") MultipartFile file) {
+                           @RequestParam(required = false) String bucketName,
+                           @RequestParam(required = false) String fileKey,
+                           @RequestParam("upload-file") MultipartFile file) {
         fileKey = StringUtils.isEmpty(fileKey) ? file.getOriginalFilename() : fileKey;
         OSSUploader<?> ossUploader = uploaderHolder.getUploader(ossName);
         if (StringUtils.isEmpty(bucketName)) {
