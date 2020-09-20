@@ -5,7 +5,7 @@
 
             <el-upload
                     drag
-                    action="/api/upload/qiniu"
+                    action="${rc.contextPath}/api/upload/qiniu"
                     name="upload-file"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
@@ -44,4 +44,4 @@
         </el-table-column>
     </el-table>
 </div>
-<script src="js/upload.js"></script>
+<script src="${rc.contextPath}/js/upload.js"></script>

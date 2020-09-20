@@ -2,7 +2,7 @@
 server:
   port: 8088
   servlet:
-    context-path:
+    context-path: /upload-oss
 
 # freemarker
 spring:
@@ -14,11 +14,8 @@ spring:
     settings:
       number_format: 0.##
     suffix: .ftl
-    request-context-attribute: rc
   resources:
     static-locations: classpath:/static/
-
-
 
 # qiniu
 qiniu:

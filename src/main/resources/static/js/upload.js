@@ -8,8 +8,10 @@ let UploadApp = {
     },
     methods: {
         beforeUpload(file) {
+            console.log("${rc.contextPath}");
             this.currentPercent = 0;
         },
+
         handlePreview(file) {
             console.log(file);
         },
