@@ -67,16 +67,19 @@ let UploadApp = {
             this.copy(markdownLink, "markdown链接已经成功复制到剪贴板。");
         },
         copy(text, successMsg) {
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    this.$message({
-                        message: successMsg,
-                        type: "success"
-                    })
-                }).catch(err => {
-                this.$message.error('无法复制此文本：'+ err);
-                console.error('无法复制此文本：', err);
-            })
+            if (navigator.clipboard !== undefined) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        this.$message({
+                            message: successMsg,
+                            type: "success"
+                        })
+                    }).catch(err => {
+                    this.$message.error('无法复制此文本：'+ err);
+                })
+            } else {
+                this.$message.error('当前环境（非https）无法自动复制文本，请手动复制');
+            }
         }
     }
 };
