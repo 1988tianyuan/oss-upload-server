@@ -3,7 +3,8 @@ let UploadApp = {
         return {
             fileList: [],
             currentPercent: 0,
-            currentUploadStatus: ''
+            currentUploadStatus: '',
+            enableCopy: ''
         };
     },
     methods: {
@@ -37,7 +38,7 @@ let UploadApp = {
         handleSuccess(response, file, fileList) {
             console.log(`这个文件上传成功：${JSON.stringify(file)}`);
             file.status = '成功';
-            if (response.success === true) {
+                if (response.success === true) {
                 let outLink = response.data.outLink;
                 file.outLink = outLink;
                 file.markdownLink = `![](${outLink})`;
@@ -78,6 +79,7 @@ let UploadApp = {
                     this.$message.error('无法复制此文本：'+ err);
                 })
             } else {
+                // this.enableCopy = false;
                 this.$message.error('当前环境（非https）无法自动复制文本，请手动复制');
             }
         }

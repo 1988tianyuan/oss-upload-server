@@ -33,13 +33,17 @@
         <el-table-column prop="outLink" label="生成外链">
             <template slot-scope="scope">
                 <div>{{scope.row.outLink}}</div>
-                <el-button type="primary" @click="copyOutLink(scope.row.outLink)">复制</el-button>
+                <el-button type="primary"
+                           :disabled="enableCopy"
+                           @click="copyOutLink(scope.row.outLink)">复制</el-button>
             </template>
         </el-table-column>
         <el-table-column prop="markdownLink" label="生成markdown链接">
             <template slot-scope="scope">
                 <div>{{scope.row.markdownLink}}</div>
-                <el-button type="primary" @click="copyMkDown(scope.row.markdownLink)">复制</el-button>
+                <el-button type="primary"
+                           :disabled="enableCopy"
+                           @click="copyMkDown(scope.row.markdownLink)">复制</el-button>
             </template>
         </el-table-column>
     </el-table>
